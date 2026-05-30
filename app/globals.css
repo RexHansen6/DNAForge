@@ -2,14 +2,14 @@
   color-scheme: dark;
   --ink: #eaf6ff;
   --muted: #9fc5df;
-  --panel: rgba(6, 30, 66, 0.78);
-  --panel-strong: rgba(8, 42, 88, 0.92);
-  --line: rgba(114, 197, 255, 0.22);
+  --panel: rgba(12, 75, 140, 0.5);
+  --panel-strong: rgba(17, 92, 162, 0.68);
+  --line: rgba(187, 233, 255, 0.34);
   --blue: #2d9cff;
   --cyan: #72e8ff;
   --green: #8de46a;
   --gold: #ffc247;
-  --deep: #031325;
+  --deep: #0b3767;
 }
 
 * {
@@ -25,9 +25,9 @@ body {
 body {
   color: var(--ink);
   background:
-    radial-gradient(circle at 12% 8%, rgba(114, 232, 255, 0.18), transparent 26rem),
-    radial-gradient(circle at 82% 18%, rgba(45, 156, 255, 0.18), transparent 24rem),
-    linear-gradient(180deg, #04162a 0%, #062047 52%, #031325 100%);
+    radial-gradient(circle at 12% 8%, rgba(174, 241, 255, 0.48), transparent 27rem),
+    radial-gradient(circle at 82% 18%, rgba(141, 228, 106, 0.22), transparent 25rem),
+    linear-gradient(145deg, #5bc6ff 0%, #2f98df 38%, #1b66b5 72%, #0d3e7c 100%);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -55,8 +55,8 @@ button {
   pointer-events: none;
   content: "";
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 34px 34px;
   mask-image: linear-gradient(to bottom, black, transparent 78%);
 }
@@ -92,7 +92,7 @@ button {
   padding: 7px 12px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(3, 19, 37, 0.48);
+  background: rgba(8, 58, 111, 0.36);
 }
 
 h1 {
@@ -253,7 +253,7 @@ p {
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--ink);
-  background: rgba(114, 232, 255, 0.08);
+  background: rgba(221, 248, 255, 0.14);
   cursor: pointer;
 }
 
@@ -329,7 +329,7 @@ input {
   outline: none;
   padding: 12px 14px;
   color: var(--ink);
-  background: rgba(3, 19, 37, 0.62);
+  background: rgba(6, 45, 88, 0.42);
 }
 
 input:focus {
@@ -369,7 +369,7 @@ input:focus {
   width: 100%;
   color: var(--ink);
   border-color: var(--line);
-  background: rgba(114, 232, 255, 0.09);
+  background: rgba(221, 248, 255, 0.13);
 }
 
 button:disabled {
@@ -446,9 +446,98 @@ button:disabled {
   padding: 9px;
   border: 1px solid rgba(114, 232, 255, 0.2);
   border-radius: 999px;
-  background: rgba(3, 19, 37, 0.84);
+  background: rgba(8, 58, 111, 0.72);
   transform: translateX(-50%);
   backdrop-filter: blur(20px);
+}
+
+.modalBackdrop {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  align-items: end;
+  padding: 16px;
+  background: rgba(4, 23, 48, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.walletPicker {
+  width: min(100%, 520px);
+  margin: 0 auto max(72px, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(210, 245, 255, 0.42);
+  border-radius: 8px;
+  background: linear-gradient(160deg, rgba(23, 113, 191, 0.92), rgba(11, 63, 126, 0.92));
+  box-shadow: 0 28px 90px rgba(0, 27, 68, 0.36);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.modalHeader div {
+  display: grid;
+  gap: 4px;
+}
+
+.walletChoice {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 78px;
+  padding: 12px;
+  border: 1px solid rgba(210, 245, 255, 0.34);
+  border-radius: 8px;
+  color: var(--ink);
+  text-align: left;
+  background: rgba(235, 252, 255, 0.13);
+  cursor: pointer;
+}
+
+.walletChoice span:not(.walletMark) {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.walletChoice strong,
+.walletChoice small {
+  overflow-wrap: anywhere;
+}
+
+.walletChoice small {
+  color: #c9ecff;
+  line-height: 1.35;
+}
+
+.walletChoice svg {
+  color: var(--green);
+}
+
+.walletMark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 999px;
+  color: #02111e;
+  font-weight: 800;
+}
+
+.walletMark.coinbase {
+  background: linear-gradient(135deg, #ffffff, #78d7ff);
+}
+
+.walletMark.injected {
+  background: linear-gradient(135deg, #ffc247, #8de46a);
 }
 
 .bottomNav button {

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   Atom,
+  CheckCircle2,
   Dna,
   FlaskConical,
   GitFork,
@@ -65,6 +66,7 @@ function DNAForgeApp() {
   const [editSpecies, setEditSpecies] = useState("Forgeborn");
   const [txLabel, setTxLabel] = useState("");
   const [autoConnectTried, setAutoConnectTried] = useState(false);
+  const [walletPickerOpen, setWalletPickerOpen] = useState(false);
 
   const { address, isConnected, chainId } = useAccount();
   const { connectors, connect, isPending: isConnecting } = useConnect();
@@ -135,6 +137,18 @@ function DNAForgeApp() {
   }, [autoConnectTried, connect, connectors, isConnected]);
 
   const busy = isWriting || receipt.isLoading;
+  const injectedConnector = connectors.find((item) => item.id === "injected");
+  const coinbaseConnector = connectors.find(
+    (item) => item.id === "coinbaseWalletSDK",
+  );
+  const connectWallet = (connectorId: "injected" | "coinbaseWalletSDK") => {
+    const connector =
+      connectorId === "injected" ? injectedConnector : coinbaseConnector;
+    if (!connector) return;
+    setWalletPickerOpen(false);
+    connect({ connector, chainId: base.id });
+  };
+
   const onWrite = (
     label: string,
     functionName:
@@ -205,27 +219,64 @@ function DNAForgeApp() {
           <button
             className="primaryButton"
             disabled={isConnecting}
-            onClick={() => {
-              const injected = connectors.find((item) => item.id === "injected");
-              if (injected) connect({ connector: injected, chainId: base.id });
-            }}
+            onClick={() => setWalletPickerOpen(true)}
           >
             {isConnecting ? <Loader2 className="spin" size={19} /> : <Wallet size={19} />}
-            Connect Browser Wallet
-          </button>
-          <button
-            className="secondaryButton"
-            disabled={isConnecting}
-            onClick={() => {
-              const coinbase = connectors.find((item) => item.id === "coinbaseWalletSDK");
-              if (coinbase) connect({ connector: coinbase, chainId: base.id });
-            }}
-          >
-            <Wallet size={18} />
-            Connect Coinbase Wallet
+            Connect Wallet
           </button>
           <p className="microcopy">Supports Coinbase Wallet, MetaMask, OKX, and injected wallets.</p>
         </section>
+      ) : null}
+
+      {walletPickerOpen ? (
+        <div className="modalBackdrop" role="presentation" onClick={() => setWalletPickerOpen(false)}>
+          <section
+            className="walletPicker"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Choose wallet"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modalHeader">
+              <div>
+                <span className="label">Choose wallet</span>
+                <strong>Connect to DNAForge</strong>
+              </div>
+              <button
+                className="iconButton"
+                aria-label="Close wallet picker"
+                title="Close"
+                onClick={() => setWalletPickerOpen(false)}
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <button
+              className="walletChoice"
+              disabled={isConnecting || !coinbaseConnector}
+              onClick={() => connectWallet("coinbaseWalletSDK")}
+            >
+              <span className="walletMark coinbase">C</span>
+              <span>
+                <strong>Coinbase Wallet</strong>
+                <small>Best for Base App and Coinbase Wallet users.</small>
+              </span>
+              <CheckCircle2 size={18} />
+            </button>
+            <button
+              className="walletChoice"
+              disabled={isConnecting || !injectedConnector}
+              onClick={() => connectWallet("injected")}
+            >
+              <span className="walletMark injected">W</span>
+              <span>
+                <strong>Browser Wallet</strong>
+                <small>Use MetaMask, OKX, or another injected wallet.</small>
+              </span>
+              <CheckCircle2 size={18} />
+            </button>
+          </section>
+        </div>
       ) : null}
 
       {connectedWrongChain ? (
