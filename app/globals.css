@@ -536,6 +536,14 @@ button:disabled {
   background: linear-gradient(135deg, #ffffff, #78d7ff);
 }
 
+.walletMark.okx {
+  background: linear-gradient(135deg, #f4fbff, #a6b5c7);
+}
+
+.walletMark.metamask {
+  background: linear-gradient(135deg, #ffbf6b, #ff7c43);
+}
+
 .walletMark.injected {
   background: linear-gradient(135deg, #ffc247, #8de46a);
 }

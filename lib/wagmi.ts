@@ -15,7 +15,7 @@ export const config = createConfig({
       preference: "all",
     }),
   ],
-  multiInjectedProviderDiscovery: false,
+  multiInjectedProviderDiscovery: true,
   ssr: true,
   client({ chain }) {
     return createClient({

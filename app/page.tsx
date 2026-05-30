@@ -24,6 +24,7 @@ import {
   useReadContract,
   useWaitForTransactionReceipt,
   useWriteContract,
+  type Connector,
 } from "wagmi";
 import { base } from "wagmi/chains";
 import { config } from "@/lib/wagmi";
@@ -65,7 +66,6 @@ function DNAForgeApp() {
   const [editSequence, setEditSequence] = useState("ACGT-AURA");
   const [editSpecies, setEditSpecies] = useState("Forgeborn");
   const [txLabel, setTxLabel] = useState("");
-  const [autoConnectTried, setAutoConnectTried] = useState(false);
   const [walletPickerOpen, setWalletPickerOpen] = useState(false);
 
   const { address, isConnected, chainId } = useAccount();
@@ -122,29 +122,21 @@ function DNAForgeApp() {
     selectedDNA.refetch();
   }, [receipt.isSuccess]);
 
-  useEffect(() => {
-    if (autoConnectTried || isConnected) return;
-    const isBaseApp =
-      typeof navigator !== "undefined" && /base/i.test(navigator.userAgent);
-    const skipped =
-      typeof window !== "undefined" &&
-      window.localStorage.getItem("dnaforge:autoConnectSkipped") === "1";
-    const injected = connectors.find((connector) => connector.id === "injected");
-    if (isBaseApp && injected && !skipped) {
-      setAutoConnectTried(true);
-      connect({ connector: injected, chainId: base.id });
-    }
-  }, [autoConnectTried, connect, connectors, isConnected]);
-
   const busy = isWriting || receipt.isLoading;
-  const injectedConnector = connectors.find((item) => item.id === "injected");
-  const coinbaseConnector = connectors.find(
-    (item) => item.id === "coinbaseWalletSDK",
-  );
-  const connectWallet = (connectorId: "injected" | "coinbaseWalletSDK") => {
-    const connector =
-      connectorId === "injected" ? injectedConnector : coinbaseConnector;
-    if (!connector) return;
+  const walletOptions = useMemo(() => {
+    const priority = (connector: Connector) => {
+      const label = `${connector.id} ${connector.name}`.toLowerCase();
+      if (label.includes("coinbase")) return 0;
+      if (label.includes("okx") || label.includes("okex")) return 1;
+      if (label.includes("metamask")) return 2;
+      if (connector.id === "injected") return 99;
+      return 10;
+    };
+
+    return [...connectors].sort((a, b) => priority(a) - priority(b));
+  }, [connectors]);
+
+  const connectWallet = (connector: Connector) => {
     setWalletPickerOpen(false);
     connect({ connector, chainId: base.id });
   };
@@ -205,7 +197,6 @@ function DNAForgeApp() {
             aria-label="Disconnect wallet"
             title="Disconnect wallet"
             onClick={() => {
-              window.localStorage.setItem("dnaforge:autoConnectSkipped", "1");
               disconnect();
             }}
           >
@@ -251,30 +242,23 @@ function DNAForgeApp() {
                 <X size={18} />
               </button>
             </div>
-            <button
-              className="walletChoice"
-              disabled={isConnecting || !coinbaseConnector}
-              onClick={() => connectWallet("coinbaseWalletSDK")}
-            >
-              <span className="walletMark coinbase">C</span>
-              <span>
-                <strong>Coinbase Wallet</strong>
-                <small>Best for Base App and Coinbase Wallet users.</small>
-              </span>
-              <CheckCircle2 size={18} />
-            </button>
-            <button
-              className="walletChoice"
-              disabled={isConnecting || !injectedConnector}
-              onClick={() => connectWallet("injected")}
-            >
-              <span className="walletMark injected">W</span>
-              <span>
-                <strong>Browser Wallet</strong>
-                <small>Use MetaMask, OKX, or another injected wallet.</small>
-              </span>
-              <CheckCircle2 size={18} />
-            </button>
+            {walletOptions.map((connector) => (
+              <button
+                key={connector.uid}
+                className="walletChoice"
+                disabled={isConnecting}
+                onClick={() => connectWallet(connector)}
+              >
+                <span className={`walletMark ${walletClassName(connector)}`}>
+                  {walletInitial(connector)}
+                </span>
+                <span>
+                  <strong>{walletName(connector)}</strong>
+                  <small>{walletDescription(connector)}</small>
+                </span>
+                <CheckCircle2 size={18} />
+              </button>
+            ))}
           </section>
         </div>
       ) : null}
@@ -333,6 +317,40 @@ function DNAForgeApp() {
       </nav>
     </main>
   );
+}
+
+function walletName(connector: Connector) {
+  if (connector.id === "injected") return "Browser Wallet";
+  return connector.name;
+}
+
+function walletInitial(connector: Connector) {
+  return walletName(connector).slice(0, 1).toUpperCase();
+}
+
+function walletClassName(connector: Connector) {
+  const label = `${connector.id} ${connector.name}`.toLowerCase();
+  if (label.includes("coinbase")) return "coinbase";
+  if (label.includes("okx") || label.includes("okex")) return "okx";
+  if (label.includes("metamask")) return "metamask";
+  return "injected";
+}
+
+function walletDescription(connector: Connector) {
+  const label = `${connector.id} ${connector.name}`.toLowerCase();
+  if (label.includes("coinbase")) {
+    return "Use Coinbase Wallet or the Base App wallet.";
+  }
+  if (label.includes("okx") || label.includes("okex")) {
+    return "Connect with OKX Wallet directly.";
+  }
+  if (label.includes("metamask")) {
+    return "Connect with MetaMask directly.";
+  }
+  if (connector.id === "injected") {
+    return "Use the active wallet injected by this browser.";
+  }
+  return "Connect this detected wallet.";
 }
 
 function LabView({
