@@ -60,3 +60,11 @@ For most Next.js projects, this is:
 
 ```bash
 http://localhost:3000
+```
+
+## Usage
+
+1. Open the app in your browser.
+2. Connect a compatible wallet.
+3. Use the DNA lab interface to create a new DNA sequence.
+4. Apply mutations or edits as needed.
