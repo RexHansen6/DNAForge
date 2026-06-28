@@ -129,3 +129,12 @@ npm run build
 npm run start
 npm run lint
 ```
+
+Use the scripts present in the repository as the source of truth.
+
+## Deployment
+
+Build the project before deployment:
+
+```bash
+npm run build
