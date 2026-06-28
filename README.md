@@ -114,3 +114,11 @@ DNAForge is intended to run against Base mainnet.
 Review contract addresses, chain configuration, and transaction flows before deploying changes.
 
 Keep attribution values current for production deployments.
+
+Test all lab actions carefully after modifying wallet, contract, or chain configuration.
+
+## Available Scripts
+
+The exact scripts are defined in `package.json`.
+
+Common Next.js scripts may include:
