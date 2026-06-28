@@ -138,3 +138,10 @@ Build the project before deployment:
 
 ```bash
 npm run build
+```
+
+Deploy using your preferred Next.js hosting provider.
+
+After deployment, verify that:
+
+- The app loads correctly.
