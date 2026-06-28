@@ -98,3 +98,11 @@ Replace the empty value after completing verification on base.dev.
 ### Onchain Attribution
 
 `lib/attribution.ts` currently contains the following placeholder:
+
+```ts
+ONCHAIN_ATTRIBUTION_DATA_SUFFIX = "0x"
+```
+
+Replace this value after completing verification on base.dev.
+
+Redeploy the application after both attribution values have been updated.
