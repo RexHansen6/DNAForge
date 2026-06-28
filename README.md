@@ -68,3 +68,10 @@ http://localhost:3000
 2. Connect a compatible wallet.
 3. Use the DNA lab interface to create a new DNA sequence.
 4. Apply mutations or edits as needed.
+5. Fuse sequences when supported by the interface.
+6. Delete individual entries when they are no longer needed.
+7. Reset the lab to clear the current lab state.
+
+## Project Structure
+
+Key files mentioned by the project:
