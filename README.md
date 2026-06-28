@@ -5,3 +5,11 @@ DNAForge is a Base miniapp for onchain DNA sequence composition.
 It lets users build and manage a personal DNA lab through contract interactions. The app supports composing sequences, mutating them, fusing them, editing them, deleting them, and resetting the lab state.
 
 Repository: [https://github.com/RexHansen6/DNAForge.git](https://github.com/RexHansen6/DNAForge.git)
+
+## Overview
+
+DNAForge combines a Next.js interface with onchain interactions on Base mainnet.
+
+The project is designed as a focused DNA composition experience where the core actions are handled through connected wallet transactions.
+
+The interface is built with the Next.js App Router and TypeScript, while blockchain connectivity is handled with Wagmi and Viem.
