@@ -106,3 +106,11 @@ ONCHAIN_ATTRIBUTION_DATA_SUFFIX = "0x"
 Replace this value after completing verification on base.dev.
 
 Redeploy the application after both attribution values have been updated.
+
+## Development Notes
+
+DNAForge is intended to run against Base mainnet.
+
+Review contract addresses, chain configuration, and transaction flows before deploying changes.
+
+Keep attribution values current for production deployments.
