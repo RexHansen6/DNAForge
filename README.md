@@ -21,3 +21,11 @@ The interface is built with the Next.js App Router and TypeScript, while blockch
 - Fuse DNA sequences together.
 - Edit created DNA entries.
 - Delete individual DNA entries.
+- Reset your DNA lab.
+- Interact with contracts on Base mainnet.
+- Use a modern TypeScript and Next.js application structure.
+
+## Tech Stack
+
+- Next.js App Router
+- TypeScript
