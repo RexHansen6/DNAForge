@@ -82,3 +82,12 @@ Key files mentioned by the project:
 The rest of the application follows the standard Next.js App Router layout.
 
 ## Attribution Setup
+
+Before deploying a verified production version, update the Base attribution values.
+
+### Offchain Attribution
+
+`app/layout.tsx` currently contains the following placeholder:
+
+```tsx
+<meta name="base:app_id" content="" />
