@@ -1,18 +1,7 @@
 # DNAForge
 
-DNAForge is a Base miniapp for onchain DNA sequence composition. Users can create, mutate, fuse, edit, delete, and reset their own DNA lab through gas-only contract interactions.
+DNAForge is a Base miniapp for onchain DNA sequence composition.
 
-## Stack
+It lets users build and manage a personal DNA lab through contract interactions. The app supports composing sequences, mutating them, fusing them, editing them, deleting them, and resetting the lab state.
 
-- Next.js App Router
-- TypeScript
-- Wagmi native config
-- Viem
-- Base mainnet
-
-## Attribution placeholders
-
-- Offchain: `app/layout.tsx` contains a hardcoded `<meta name="base:app_id" content="" />`.
-- Onchain: `lib/attribution.ts` contains `ONCHAIN_ATTRIBUTION_DATA_SUFFIX = "0x"`.
-
-Replace both values after base.dev verification, then redeploy.
+Repository: [https://github.com/RexHansen6/DNAForge.git](https://github.com/RexHansen6/DNAForge.git)
