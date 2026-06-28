@@ -91,3 +91,10 @@ Before deploying a verified production version, update the Base attribution valu
 
 ```tsx
 <meta name="base:app_id" content="" />
+```
+
+Replace the empty value after completing verification on base.dev.
+
+### Onchain Attribution
+
+`lib/attribution.ts` currently contains the following placeholder:
