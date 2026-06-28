@@ -13,3 +13,11 @@ DNAForge combines a Next.js interface with onchain interactions on Base mainnet.
 The project is designed as a focused DNA composition experience where the core actions are handled through connected wallet transactions.
 
 The interface is built with the Next.js App Router and TypeScript, while blockchain connectivity is handled with Wagmi and Viem.
+
+## Features
+
+- Create DNA sequences in your lab.
+- Mutate existing DNA sequences.
+- Fuse DNA sequences together.
+- Edit created DNA entries.
+- Delete individual DNA entries.
