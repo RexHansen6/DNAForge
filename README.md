@@ -145,3 +145,11 @@ Deploy using your preferred Next.js hosting provider.
 After deployment, verify that:
 
 - The app loads correctly.
+- Wallet connection works as expected.
+- Base mainnet is configured correctly.
+- DNA lab actions submit transactions successfully.
+- Attribution placeholders have been replaced.
+
+## License
+
+No license information was provided in the original README.
