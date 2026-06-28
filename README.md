@@ -36,3 +36,10 @@ The interface is built with the Next.js App Router and TypeScript, while blockch
 ## Getting Started
 
 Clone the repository:
+
+```bash
+git clone https://github.com/RexHansen6/DNAForge.git
+cd DNAForge
+```
+
+Install dependencies:
