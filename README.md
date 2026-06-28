@@ -75,3 +75,10 @@ http://localhost:3000
 ## Project Structure
 
 Key files mentioned by the project:
+
+- `app/layout.tsx`
+- `lib/attribution.ts`
+
+The rest of the application follows the standard Next.js App Router layout.
+
+## Attribution Setup
