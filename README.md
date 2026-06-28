@@ -29,3 +29,10 @@ The interface is built with the Next.js App Router and TypeScript, while blockch
 
 - Next.js App Router
 - TypeScript
+- Wagmi native config
+- Viem
+- Base mainnet
+
+## Getting Started
+
+Clone the repository:
