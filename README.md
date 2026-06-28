@@ -122,3 +122,10 @@ Test all lab actions carefully after modifying wallet, contract, or chain config
 The exact scripts are defined in `package.json`.
 
 Common Next.js scripts may include:
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
